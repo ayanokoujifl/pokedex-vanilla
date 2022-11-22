@@ -15,7 +15,6 @@ const fetchPokemom = async (pokemom) => {
   if (APIResponse.status === 200) {
     return await APIResponse.json()
   } else {
-    const data = APIResponse.json()
     alert(`Erro: ${APIResponse.status}\nO pokemom ${input.value} não existe`)
     input.value = ''
   }
@@ -28,10 +27,14 @@ const renderPokemom = async (pokemom) => {
   if (data) {
     pokemomName.innerHTML = data.name
     pokemomNumber.innerHTML = data.id
-    pokemomGif.src =
-      data['sprites']['versions']['generation-v']['black-white']['animated'][
-        'front_default'
-      ]
+    if (data.id >= 650) {
+      pokemomGif.src = data['sprites']['front_default']
+    } else {
+      pokemomGif.src =
+        data['sprites']['versions']['generation-v']['black-white']['animated'][
+          'front_default'
+        ]
+    }
     idPokemom = data.id
     input.value = ''
   } else {
